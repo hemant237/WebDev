@@ -18,4 +18,6 @@ function applydiscount(amt,percent) {
 }
 
 console.log(applydiscount(5000, 10));
+console.log(applydiscount(2000, 25));
+console.log(applydiscount(2000));
 
