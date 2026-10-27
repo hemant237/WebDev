@@ -13,7 +13,7 @@ console.log(`Gst: ${gst}`);
 console.log(`GrandTotal: ${grandtotal}`);
 
 
-function applydiscount(amt,percent) {
+function applydiscount(amt,percent=0) {
     return amt * (100-percent)/100
 }
 
