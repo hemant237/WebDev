@@ -6,3 +6,24 @@ const employees = [
 ];
 
 // map: har employee se ek cheez nikaalo
+const names = employees.map((emp) => emp.name);
+console.log(names);
+
+const labels = employees.map((emp) => `${emp.code} - ${emp.name}`);
+console.log(labels);
+
+// reduce: sab ko jodke ek total banao
+const totalPayroll = employees.reduce((sum,emp) => sum + emp.salary , 0);
+console.log(`TotalPyroll: ${totalPayroll}`);
+
+// filter + reduce saath mein (chaining)
+const activePayroll = employees.filter((emp) => emp.isActive === true)
+.reduce((sum,emp) => sum + emp.salary, 0);
+console.log(`Active payroll : ${activePayroll}`);
+
+// filter + reduce for sales dept
+const salespayroll = employees.filter((emp) => emp.department === "Sales").reduce((sum,emp) => sum + emp.salary,0);
+console.log(`Sales Payroll: ${salespayroll}`);
+
+const Activemps = employees.filter((emp) => emp.isActive === true).map((emp) => emp.name);
+console.log(`Active Employees: ${Activemps}`);
