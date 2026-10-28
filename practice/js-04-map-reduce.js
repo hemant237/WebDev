@@ -26,4 +26,4 @@ const salespayroll = employees.filter((emp) => emp.department === "Sales").reduc
 console.log(`Sales Payroll: ${salespayroll}`);
 
 const Activemps = employees.filter((emp) => emp.isActive === true).map((emp) => emp.name);
-console.log(`Active Employees: ${Activemps}`);
+console.log(Activemps);
