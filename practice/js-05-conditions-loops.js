@@ -69,17 +69,21 @@ function describestatus(code) {
 console.log(describestatus(404));
 console.log(describestatus(418));
 
-function getsalaryband(salary) {
-    for (const emp of employees) {
-      if ( emp.salary>=30000) {
-        console.log("High");
-      }
-      else if (emp.salary >=20000) {
-        console.log("Medium")
-      }
-      else {
-        console.log("Low"); }
-}
+function getSalaryBand(salary) {
+    if (salary >= 30000) {
+        return "High"
+    }
+    else if (salary >= 22000) {
+        return "Medium"
+    }
+    else {
+        return "Low"
+    }
 }
 
-console.log(getsalaryband(employees));
+for (const emp of employees) {
+    console.log(`${emp.name}: ${getSalaryBand(emp.salary)} `);
+}
+
+   console.log(getSalaryBand(35000));
+   console.log(getSalaryBand(10000));
