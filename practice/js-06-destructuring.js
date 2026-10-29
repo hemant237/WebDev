@@ -59,11 +59,11 @@ console.log(sara.bonus ?? 500)
 
 
 function getManagerName(employee) {
-    console.log((employee.manager?.name)?? "No manager");
+    return employee.manager?.name ?? "No manager";
 
 } 
-getManagerName(emp);    // Neha
-getManagerName(sara);   // No manager
+console.log(getManagerName(emp));    // Neha
+console.log(getManagerName(sara));   // No manager
 
 
 
