@@ -10,23 +10,9 @@ function fakeDbQuery() {
   });
 }
 
-// Calling the function
-fakeDbQuery().then((employees) => {
-    console.log(employees);
-});
-
-const result = fakeDbQuery();
-result.then((employees) => {
-    console.log(employees);
-});
-
-async function getEmployees() {
-
-    const employees = await fakeDbQuery();
-
-    console.log(employees);
-}
-getEmployees();
+// 2) bina await: data nahi, sirf token (Promise) milta hai
+const promise = fakeDbQuery();
+console.log(promise);
 
 // 3) await ke saath: asli data milta hai
 async function showEmployees() {
@@ -68,7 +54,3 @@ async function getUser(id) {
 
 const user = await getUser(1);
 console.log(user.name);
-
-
-
-
