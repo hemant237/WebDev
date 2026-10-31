@@ -11,6 +11,15 @@ function fakeDbQuery() {
   });
 }
 
- console.log(await fakeDbQuery());
+//  console.log(await fakeDbQuery());
 
+ async function getEmployees() {
+
+    const employees = await fakeDbQuery();
+
+    console.log(employees);
+
+}
+
+getEmployees();
 
