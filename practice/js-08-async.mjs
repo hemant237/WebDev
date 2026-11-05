@@ -52,16 +52,9 @@ async function getUser(id) {
   return user;
 }
 
-const user = await getUser(1);
-console.log(user.name);
-
-
-// 3) await ke saath: asli data milta hai
-async function showEmployees() {
-  console.log("Query shuru...");
-  const employees = await fakeDbQuery();
-  console.log("Query khatam");
-  console.log(employees.map((emp) => emp.name));
+try {
+  const missinguser = await getUser(9999);
+  console.log(missinguser.name);
+} catch (error) {
+  console.log(error.message);
 }
-
-showEmployees();
