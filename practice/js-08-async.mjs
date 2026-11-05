@@ -1,129 +1,67 @@
-function loginUser(email,password) {
-  return new Promise((resolve,reject) => {
+// 1) ek nakli "database query" jo 1 second leti hai
+function fakeDbQuery() {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      if (email === "admin@gmail.com" && password === "12345") {
-        resolve({
-            message: "Login Successful",
-            user: email,
-            role:"Admin"  
-        });
-      }else {
-          reject ("Invalid Email or Password"); 
-      }
-    },2000);
+      resolve([
+        { code: "EMP001", name: "Ravi" },
+        { code: "EMP002", name: "Neha" },
+      ]);
+    }, 1000);
   });
 }
 
+// 2) bina await: data nahi, sirf token (Promise) milta hai
+const promise = fakeDbQuery();
+console.log(promise);
 
+// 3) await ke saath: asli data milta hai
+async function showEmployees() {
+  console.log("Query shuru...");
+  const employees = await fakeDbQuery();
+  console.log("Query khatam");
+  console.log(employees.map((emp) => emp.name));
+}
 
-loginUser("admin@gmail.om","12345").then((result) => {
-  console.log(result);
-}).catch((error)=>{
-  console.log(error);
-});
+await showEmployees();
 
-
-function getproduct(productid) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const products = [
-        {id:101,name:"laptop",price:55000},
-        {id:102,name:"Mobile",price:25000},
-        {id:103,name:"Keyboard",price:1500}
-      ];
-      const product = products.find((item) => item.id === productid);
-
-      resolve(product);
-    },1500);
+// 4) error sambhalna: try / catch
+function fakeFailingQuery() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => reject(new Error("Database connection failed")), 500);
   });
 }
 
-getproduct(102).then((product) => {
-  console.log(product)
-});
-
-
-function processpayment(amount) {
-  return new Promise ((resolve,reject) => {
-    setTimeout(() => {
-      if (amount > 0) {
-        resolve({
-          transactionid:"TNX001",
-          amount: amount,
-          status:"Payment Successful"
-        });
-      } else {reject("invalid payment amount")};
-    },3000
-    )
-  });
-}
-
-processpayment(5000).then((payment) => {console.log(payment);}).catch
-((error) => {console.log(error); });
-
-function getEmployees() {
-
-    return new Promise((resolve) => {
-
-        setTimeout(() => {
-
-            resolve([
-                { id: 1, name: "Ravi", salary: 25000 },
-                { id: 2, name: "Neha", salary: 30000 },
-                { id: 3, name: "Amit", salary: 28000 }
-            ]);
-
-        }, 2000);
-
-    });
-
-}
-
-async function calculatePayroll() {
-  const employees = await getEmployees();
-
-  const totalsalary = employees.reduce((sum,emp) => {
-    return sum + emp.salary;
-  },0);
-    console.log("Total payroll:",totalsalary);
-}
-
-calculatePayroll();
-
-function verifyorder() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve("Order Verified Successfully");
-    },1000);
-  });
-}
-
-function makepayment() {
-  return new Promise((resolve) => {
-  setTimeout(() => {
-     resolve("Payment Done successfully");
-  },2000);
-});
-}
-
-function dispatchorder() {
-  return new Promise((resolve) => {
-  setTimeout(() => {
-    resolve("Order Dispatched");
+async function safeLoad() {
+  try {
+    const data = await fakeFailingQuery();
+    console.log(data);
+  } catch (error) {
+    console.log(`Error pakda: ${error.message}`);
   }
-  ,1500);
-});
 }
 
-async function Placeorder() {
-  const order = await verifyorder();
-  console.log(order);
+await safeLoad();
 
-  const payment = await makepayment();
-  console.log(payment);
-
-  const dispatch = await dispatchorder();
-  console.log(dispatch);
+// 5) asli internet API: fetch
+async function getUser(id) {
+  const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+  if (!response.ok) {
+    throw new Error(`Request failed: ${response.status}`);
+  }
+  const user = await response.json();
+  return user;
 }
 
-Placeorder();
+const user = await getUser(1);
+console.log(user.name);
+
+
+// 3) await ke saath: asli data milta hai
+async function showEmployees() {
+  console.log("Query shuru...");
+  const employees = await fakeDbQuery();
+  console.log("Query khatam");
+  console.log(employees.map((emp) => emp.name));
+}
+
+showEmployees();
